@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multi-step form in Vanilla JS</title>
+  </head>
+  <body>
+    <div class="form-container">
+      <form name="main-form" id="main-form">
+        <div class="form1">
+          <label for="first-name">First name</label>
+          <input type="text" id="first-name" name="first-name" />
+          <label for="last-name">Last name</label>
+          <input type="text" id="last-name" name="last-name" />
+        </div>
+        <button id="go-to-step-2">Next</button>
+      </form>
+    </div>
+    <script>
+      // This is our global state. You have to know that is considered a bad practice
+      // to store variables on the global scope, but for this example, it's very convenient
+      let firstName = "";
+      let lastName = "";
+      let age = 0;
+
+      /**
+       * Returns the HTML of a specific subform (or step)
+       *
+       * @param {number} step - The step of the form you want the HTML of
+       */
+      const getFormHTML = (step) => {
+        switch (step) {
+          case 2:
+            return `
+				<div class="form2">
+					<label for="Age">Age</label>
+					<input type="text" id="age" name="age" />
+ 				</div>
+ 				<button id="go-to-step-3">Next</button>
+			`;
+          case 3:
+            return `
+				<div>
+		  		<p>These are the values you entered:</p>
+					<div id="data">
+						<p><strong>First name: </strong>${firstName}</p>
+						<p><strong>Last name: </strong>${lastName}</p>
+						<p><strong>Age: </strong>${age}</p>
+		  		</div>
+					<button type="submit">Submit form</button>
+				</div>
+			`;
+          default:
+            return "";
+        }
+      };
+
+      /**
+       * Apply a custom style if the field is not valid
+       *
+       * @param {DOMNode} field - The target DOM node you want the styles to be applied to
+       * @param {bool} condition - The condition that determines if the field is valid
+       */
+      const isValidField = (field, condition) => {
+        field.style.borderColor = condition ? "black" : "red";
+        return condition;
+      };
+
+      // ✅ We need to wait for the DOM to be ready!
+      window.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("main-form").addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          // 💡Add here your own submit function
+          alert("submitted");
+        });
+
+        // ℹ️ Listens for any clicks within the document.
+        // We do this way because we'll be inserting dynamic HTML, thus we cannot
+        // add event listeners for the dynamic elements.
+        document.addEventListener("click", (e) => {
+          if (!e.target) return;
+
+          if (e.target.id == "go-to-step-2") {
+            e.preventDefault();
+            firstNameEl = document.getElementById("first-name");
+            lastNameEl = document.getElementById("last-name");
+
+            // ⚡️ If any validation error occurs, prevent user from going to the next step!
+            if (!isValidField(firstNameEl, !!firstNameEl.value.length)) return;
+            if (!isValidField(lastNameEl, !!lastNameEl.value.length)) return;
+
+            // 🔥 Save the values in our "global state"
+            firstName = firstNameEl.value;
+            lastName = lastNameEl.value;
+
+            // 🆒 Replace the content of the form with the new sub-form
+            document.getElementById("main-form").innerHTML = getFormHTML(2);
+          }
+
+          if (e.target.id == "go-to-step-3") {
+            e.preventDefault();
+            ageEl = document.getElementById("age");
+
+            if (!isValidField(ageEl, !!ageEl.value.length && ageEl.value >= 1))
+              return;
+
+            age = ageEl.value;
+
+            document.getElementById("main-form").innerHTML = getFormHTML(3);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
