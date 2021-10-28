@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How To Create An Animated Sidebar With CSS and JavaScript</title>
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="main">
+      <div class="sidebar sidebar--isHidden">
+        <ul class="sidebar-menu">
+          <li class="sidebar-menu__item">
+            <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+          </li>
+          <li class="sidebar-menu__item">
+            <a href="#"><i class="fa fa-rss" aria-hidden="true"></i> News</a>
+          </li>
+          <li class="sidebar-menu__item">
+            <a href="#"
+              ><i class="fa fa-envelope" aria-hidden="true"></i> Contact</a
+            >
+          </li>
+          <li class="sidebar-menu__item">
+            <a href="#"
+              ><i class="fa fa-info-circle" aria-hidden="true"></i> About</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="content">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum
+        neque facere enim vero quia hic, exercitationem doloribus qui reiciendis
+        cum, voluptates iure nobis aperiam earum, reprehenderit quos voluptate
+        eum inventore!
+        <div style="text-align: center; margin-top: 2rem">
+          <button id="toggle">Show Sidebar</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("toggle").addEventListener("click", () => {
+          const sidebarEl = document.getElementsByClassName("sidebar")[0];
+          sidebarEl.classList.toggle("sidebar--isHidden");
+
+          document.getElementById("toggle").innerHTML =
+            sidebarEl.classList.contains("sidebar--isHidden")
+              ? "Show Sidebar"
+              : "Hide Sidebar";
+        });
+      });
+    </script>
+    <style>
+      *,
+      html {
+        margin: 0;
+        padding: 0;
+      }
+
+      .main {
+        font-family: Arial, Verdana, sans-serif;
+      }
+
+      .sidebar {
+        background-color: #264653;
+        width: 12rem;
+        height: 100vh;
+        padding: 0;
+        position: fixed;
+        transition: transform 300ms ease-in;
+      }
+
+      .sidebar--isHidden {
+        transform: translateX(-12rem);
+        transition: transform 300ms ease-out;
+      }
+
+      .sidebar-menu {
+        list-style: none;
+        padding: 1.5rem;
+        margin-top: 0;
+      }
+
+      .sidebar-menu__item {
+        display: block;
+        cursor: pointer;
+        margin-bottom: 0.5rem;
+      }
+
+      .sidebar-menu__item a {
+        color: #e9c46a;
+        text-decoration: none;
+        display: block;
+      }
+
+      .sidebar-menu__item a:hover {
+        color: #e76f51;
+        transition: color 150ms linear;
+      }
+
+      .content {
+        background-color: #2a9d8f;
+        padding: 2rem;
+        height: 100vh;
+        color: white;
+      }
+
+      #toggle {
+        background-color: #e9c46a;
+        border: 2px solid #f4a261;
+        padding: 0.5rem 2rem;
+        cursor: pointer;
+        transition: all 150ms linear;
+      }
+
+      #toggle:hover {
+        background-color: #f4a261;
+        transition: all 150ms ease-in;
+      }
+    </style>
+  </body>
+</html>
