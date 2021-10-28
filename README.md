@@ -8,6 +8,11 @@ I will be updating this repo and my blog with the completed projects.
 
 If you find any bugs, please feel free to open an issue, or if you are in the mood, open a Pull Request.
 
+## List of Projects
+
+1. Multi-Step Form
+2. Animated Sidebar With CSS and JS
+
 You can find more information, and the links to the completed projects here:
 
 [30 Days of JavaScript Coding](https://spacebro.io/articles/30-days-javascript-coding)
