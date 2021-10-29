@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analog Clock with CSS and JS</title>
+  </head>
+  <body>
+    <div class="clock">
+      <div class="clock__face">
+        <div class="hand hand--hours" id="hours"></div>
+        <div class="hand hand--minutes" id="minutes"></div>
+        <div class="hand hand--seconds" id="seconds"></div>
+      </div>
+    </div>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        // Execute the following callback every 1000ms (1 second)
+        setInterval(() => {
+          // let's get the date every second
+          const now = new Date();
+          const hours = now.getHours() % 12;
+          const minutes = now.getMinutes();
+          const seconds = now.getSeconds();
+          document.getElementById("hours").style.transform = `rotate(${
+            30 * hours
+          }deg)`;
+          document.getElementById("minutes").style.transform = `rotate(${
+            6 * minutes
+          }deg)`;
+          document.getElementById("seconds").style.transform = `rotate(${
+            6 * seconds
+          }deg)`;
+        }, 1000);
+      });
+    </script>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      .clock {
+        background-color: #001219;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+      .clock__face {
+        border: 3px solid white;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        position: relative;
+      }
+
+      .hand {
+        height: 140px;
+        width: 4px;
+        transform-origin: center bottom;
+        transform: rotate(0deg);
+        position: absolute;
+      }
+      .hand--hours {
+        background: #ae2012;
+      }
+      .hand--minutes {
+        background: #e9d8a6;
+        width: 3px;
+      }
+      .hand--seconds {
+        background: #94d2bd;
+        width: 2px;
+        transform: rotate(360deg);
+      }
+    </style>
+  </body>
+</html>

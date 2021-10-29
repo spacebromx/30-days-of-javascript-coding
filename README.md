@@ -12,6 +12,7 @@ If you find any bugs, please feel free to open an issue, or if you are in the mo
 
 1. Multi-Step Form
 2. Animated Sidebar With CSS and JS
+3. Analog clock
 
 You can find more information, and the links to the completed projects here:
 
