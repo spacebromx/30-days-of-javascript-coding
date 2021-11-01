@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to create a digital clock with CSS and JS</title>
+  </head>
+  <body>
+    <div class="clock">
+      <div id="hours-left" class="number">
+        <div class="bar barA"></div>
+        <div class="bar barB"></div>
+        <div class="bar barC"></div>
+        <div class="bar barD"></div>
+        <div class="bar barE"></div>
+        <div class="bar barF"></div>
+        <div class="bar barG"></div>
+      </div>
+      <div id="hours-right" class="number">
+        <div class="bar barA"></div>
+        <div class="bar barB"></div>
+        <div class="bar barC"></div>
+        <div class="bar barD"></div>
+        <div class="bar barE"></div>
+        <div class="bar barF"></div>
+        <div class="bar barG"></div>
+      </div>
+      <div class="separator">:</div>
+      <div id="minutes-left" class="number">
+        <div class="bar barA"></div>
+        <div class="bar barB"></div>
+        <div class="bar barC"></div>
+        <div class="bar barD"></div>
+        <div class="bar barE"></div>
+        <div class="bar barF"></div>
+        <div class="bar barG"></div>
+      </div>
+      <div id="minutes-right" class="number">
+        <div class="bar barA"></div>
+        <div class="bar barB"></div>
+        <div class="bar barC"></div>
+        <div class="bar barD"></div>
+        <div class="bar barE"></div>
+        <div class="bar barF"></div>
+        <div class="bar barG"></div>
+      </div>
+      <div class="separator">:</div>
+      <div id="seconds-left" class="number">
+        <div class="bar barA"></div>
+        <div class="bar barB"></div>
+        <div class="bar barC"></div>
+        <div class="bar barD"></div>
+        <div class="bar barE"></div>
+        <div class="bar barF"></div>
+        <div class="bar barG"></div>
+      </div>
+      <div id="seconds-right" class="number">
+        <div class="bar barA"></div>
+        <div class="bar barB"></div>
+        <div class="bar barC"></div>
+        <div class="bar barD"></div>
+        <div class="bar barE"></div>
+        <div class="bar barF"></div>
+        <div class="bar barG"></div>
+      </div>
+    </div>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        /**
+         * Returns a 2 digit number (with a leading 0). If you pass 4, it will return 04. It's for consistency only
+         */
+        const padNumber = (number) =>
+          number < 10 ? `0${number}` : String(number);
+
+        /**
+         * Adds the right classnames to a specific node in the DOM
+         */
+        const addClassName = (elementId, value) => {
+          const el = document.getElementById(elementId);
+
+          // If the node can't be found, exit
+          if (!el) return;
+
+          el.className = `number number--${value}`;
+        };
+
+        // Execute the following callback every 1000ms (1 second)
+        setInterval(() => {
+          // let's get the date every second
+          const now = new Date();
+          const hours = padNumber(now.getHours());
+          const minutes = padNumber(now.getMinutes());
+          const seconds = padNumber(now.getSeconds());
+
+          /*
+      	If the value of hours is something like 12, I will split the value into 2 digits (1 and 2). That's because I have 2 slots to display the value of hours.
+      */
+          addClassName("hours-left", hours[0]);
+          addClassName("hours-right", hours[1]);
+
+          addClassName("minutes-left", minutes[0]);
+          addClassName("minutes-right", minutes[1]);
+
+          addClassName("seconds-left", seconds[0]);
+          addClassName("seconds-right", seconds[1]);
+        }, 1000);
+      });
+    </script>
+
+    <style>
+      body {
+        background: black;
+        margin: 0;
+      }
+
+      .clock {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .separator {
+        height: 100%;
+        font-size: 8rem;
+        display: flex;
+        align-items: center;
+        margin: 0 1rem;
+      }
+
+      .number {
+        display: block;
+        height: 200px;
+        width: 90px;
+        position: relative;
+        padding: 1rem;
+        display: grid;
+        grid-template-columns: 3px 84px 3px;
+        grid-template-rows: 1fr 1fr;
+      }
+
+      .bar {
+        background: red;
+      }
+
+      .barA {
+        grid-column: 1/3;
+        grid-row: 1/1;
+        height: 3px;
+      }
+
+      .barB {
+        grid-column: 3/4;
+        grid-row: 1/1;
+      }
+
+      .barC {
+        grid-column: 3/4;
+        grid-row: 2/3;
+      }
+
+      .barD {
+        grid-column: 1/3;
+        grid-row: 3/3;
+        height: 3px;
+      }
+
+      .barE {
+        grid-column: 1/2;
+        grid-row: 2/3;
+      }
+
+      .barF {
+        grid-column: 1/2;
+        grid-row: 1/1;
+      }
+
+      .barG {
+        grid-column: 1/3;
+        grid-row: 2/3;
+        height: 3px;
+      }
+
+      .number--0 .barG {
+        background: transparent;
+      }
+
+      .number--1 .barA,
+      .number--1 .barD,
+      .number--1 .barE,
+      .number--1 .barF,
+      .number--1 .barG {
+        background: transparent;
+      }
+
+      .number--2 .barC,
+      .number--2 .barF {
+        background: transparent;
+      }
+
+      .number--3 .barE,
+      .number--3 .barF {
+        background: transparent;
+      }
+
+      .number--4 .barA,
+      .number--4 .barD,
+      .number--4 .barE {
+        background: transparent;
+      }
+
+      .number--5 .barB,
+      .number--5 .barE {
+        background: transparent;
+      }
+
+      .number--6 .barB {
+        background: transparent;
+      }
+
+      .number--7 .barD,
+      .number--7 .barE,
+      .number--7 .barF,
+      .number--7 .barG {
+        background: transparent;
+      }
+
+      .number--9 .barE {
+        background: transparent;
+      }
+
+      .number--0 .barG {
+        background: transparent;
+      }
+    </style>
+  </body>
+</html>
