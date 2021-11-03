@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tip Calculator</title>
+  </head>
+  <body>
+    <div class="calculator">
+			<h1 class="calculator__title">Tip Calculator</h1>
+			<div class="field">
+				<label for="amount" class="field__label">Amount</label>
+				<input type="text" name="amount" id="amount" placeholder="$" class="field__input">
+				</input>
+			</div>
+			<div class="field">
+				<label for="tip" class="field__label">Tip</label>
+				<select name="tip" id="tip" class="field__input">
+					<option value="0" selected>No tip 🥲</option>
+					<option value="10">10% 😒</option>
+					<option value="15">15% 🙂</option>
+					<option value="20">20% 🥺</option>
+				</select>
+			</div>
+			<div class="field">
+				<label for="people" class="field__label">People</label>
+				<input type="number" value="1" min="1" step="1" id="people" class="field__input">
+			</div>
+			<button id="calculate">Calculate</button>
+			<div class="info">
+				<p class="info__tip"></p>
+				<p class="info__total"></p>
+			</div>
+		</div>
+		<style>
+			body {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin: 0;
+				font-family: Arial, Verdana, sans-serif;
+				background-color: #252422;
+			}
+			
+			.calculator {
+				background-color: #fffcf2;
+				padding: 2rem;
+				border-radius: 22px;
+				margin: 4rem 0;
+				width: 400px;
+			}
+			.calculator__title {
+				color: #eb5e28;
+				margin: 0 0 1rem 0;
+			}
+			
+			.field {
+				display: flex;
+				align-items: center;
+				margin-bottom: 1rem;
+			}
+			.field__label {
+				flex: 0 0 20%;
+				cursor: pointer;
+				font-size: 1.1rem;
+			}
+			.field__input {
+				flex: 1;
+				padding: 0.4rem;
+				font-size: 1.1rem;
+			}
+			
+			#calculate {
+				background-color: #403d39;
+				color: white;
+				border: none;
+				padding: 1rem 1.4rem;
+				font-size: 1.1rem;
+				float: right;
+			}
+			
+			.info {
+				clear: both;
+				display: none;
+				font-size: 1.4rem;
+			}
+		</style>
+		<script>
+			window.addEventListener("DOMContentLoaded", () => {
+				document.getElementById("calculate").addEventListener("click", () => {
+					const amount = parseFloat(document.getElementById("amount").value);
+					
+					if (isNaN(amount)) return;
+					
+					const tipEl = document.getElementById("tip");
+					const tip = Number.parseInt(tipEl.options[tipEl.selectedIndex].value).toFixed(
+						2
+					);
+					const people = Number.parseInt(document.getElementById("people").value);
+			
+					const tipInDollars = amount * (tip / 100);
+					const subTotal = parseFloat(amount + tipInDollars);
+					const total = subTotal / people;
+			
+					document.querySelector(".info__tip").innerHTML = `⭐️Tip: $${parseFloat(
+						tipInDollars
+					).toFixed(2)}`;
+					document.querySelector(".info__total").innerHTML = `💰 Total: $${total} ${
+						people > 1 ? "each" : ""
+					}`;
+					document.querySelector(".info").style = "display: block";
+				});
+			});
+			
+		</script>
+  </body>
+</html>
